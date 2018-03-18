@@ -10,20 +10,20 @@ var demo = new Vue({
   methods: {
     displayMem: function () {
       var data = [
-        {time: '10:01', used: 200, extra: 500, total: 1000},
-        {time: '10:02', used: 220, extra: 600, total: 1000},
-        {time: '10:03', used: 300, extra: 800, total: 1000},
-        {time: '10:04', used: 140, extra: 700, total: 1000},
-        {time: '10:05', used: 100, extra: 700, total: 1000},
-        {time: '10:06', used: 200, extra: 700, total: 1000},
-        {time: '10:07', used: 50, extra: 700, total: 1000},
-        {time: '10:08', used: 350, extra: 700, total: 1000},
-        {time: '10:09', used: 250, extra: 700, total: 1000}
+        {time: '2009', used: 12, total: 1000},
+        {time: '2010', used: 22,  total: 1000},
+        {time: '2011', used: 10, total: 1000},
+        {time: '2012', used: 14, total: 1000},
+        {time: '2013', used: 12, total: 1000},
+        {time: '2014', used: 18,  total: 1000},
+        {time: '2015', used: 25,  total: 1000},
+        {time: '2016', used: 13,  total: 1000},
+        {time: '2017', used: 8,  total: 1000}
       ];
 
       var category = ['used'];
 
-      var hAxis = 10, mAxis = 10;
+      var hAxis = 2018;//, mAxis = 10;
 
       //generation function
       function generate(data, id, axisNum) {
@@ -32,6 +32,7 @@ var demo = new Vue({
             height = $(id).height() - margin.top - margin.bottom;
 
         var parseDate = d3.time.format("%H:%M").parse;
+        var parseYear = d3.time.format("%Y").parse;
         var formatPercent = d3.format(".0%");
 
         var legendSize = 10,
@@ -41,11 +42,12 @@ var demo = new Vue({
             .range([0, width]);
 
         var y = d3.scale.linear()
+            .domain([0, 0.07])
             .range([height, 0]);
 
         var xAxis = d3.svg.axis()
             .scale(x)
-            .ticks(d3.time.minutes, Math.floor(data.length/axisNum))
+            .ticks(d3.time.years, Math.floor(data.length/axisNum))
             .tickSize(-height)
             .tickPadding([6])
             .orient("bottom");
@@ -60,7 +62,7 @@ var demo = new Vue({
         var ddata = (function() {
           var temp = [];
           for (var i=0; i<data.length; i++) {
-            temp.push({'time': parseDate(data[i]['time']), 'used': data[i]['used'], 'extra': data[i]['extra'], 'total': data[i]['total']});
+            temp.push({'time': parseYear(data[i]['time']), 'used': data[i]['used'], 'total': data[i]['total']});
           }
           
           return temp;
@@ -218,7 +220,7 @@ var demo = new Vue({
           var temp = [];
 
           for (var i=0; i<data.length; i++) {
-            temp.push({'time': parseDate(data[i]['time']), 'used': data[i]['used'], 'extra': data[i]['extra'], 'total': data[i]['total']});
+            temp.push({'time': parseDate(data[i]['time']), 'used': data[i]['used'], 'total': data[i]['total']});
           }
           return temp;
         })();
@@ -341,18 +343,18 @@ var demo = new Vue({
       var self = this;
 
       var data = [
-        {time:'10:00', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 4, area8: 5, area9: 6, area10: 11, area11:1, area12: 15, area13: 7, area14: 9, area15: 12, area16: 18, area17: 16, area18: 19, area19: 2, area20: 16 },
-        {time:'10:01', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:02', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:03', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:04', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:05', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:06', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:07', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
-        {time:'10:08', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 }
+        {time:'2009', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 4, area8: 5, area9: 6, area10: 11, area11:1, area12: 15, area13: 7, area14: 9, area15: 12, area16: 18, area17: 16, area18: 19, area19: 2, area20: 16 },
+        {time:'2010', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2011', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2012', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2013', area1:15.1, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2014', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2015', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2016', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 },
+        {time:'2017', area1:14, area2: 13, area3: 2, area4: 3, area5: 10, area6: 8, area7: 3, area8: 2, area9: 2, area10: 8, area11:14, area12: 13, area13: 12, area14: 3, area15: 10, area16: 18, area17: 3, area18: 2, area19: 2, area20: 16 }
       ];
 
-      var hAxis = 10, mAxis = 9;
+      var hAxis = 2018;//, mAxis = 9;
 
       //generation function
       function generate(data, id, axisNum) {
@@ -360,7 +362,7 @@ var demo = new Vue({
             width = $(id).width() - margin.left - margin.right,
             height = $(id).height() - margin.top - margin.bottom;
 
-        var parseDate = d3.time.format("%H:%M").parse;
+        var parseDate = d3.time.format("%Y").parse;
         
         var legendSize = Math.floor(width / 27.5),
             color = d3.scale.category20();
@@ -389,7 +391,7 @@ var demo = new Vue({
         var xAxis = d3.svg.axis()
             .scale(x)
             .orient("bottom")
-            .ticks(d3.time.minutes, Math.floor(data.length / axisNum))
+            .ticks(d3.time.years, Math.floor(data.length / axisNum))
             .tickPadding([6])
             .tickSize(-height);
 
